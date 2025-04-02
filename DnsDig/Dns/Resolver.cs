@@ -7,8 +7,7 @@ using System.Net.Sockets;
 
 using System.Net.NetworkInformation;
 
-using System.Diagnostics;
-using System.Runtime.Remoting.Messaging;
+// using System.Runtime.Remoting.Messaging;
 
 
 /*
@@ -693,7 +692,7 @@ namespace Heijden.DNS
 		/// <returns></returns>
 		public IPAddress[] EndGetHostAddresses(IAsyncResult AsyncResult)
 		{
-			AsyncResult aResult = (AsyncResult)AsyncResult;
+            System.Runtime.Remoting.Messaging.AsyncResult aResult = (System.Runtime.Remoting.Messaging.AsyncResult)AsyncResult;
 			GetHostAddressesDelegate g = (GetHostAddressesDelegate)aResult.AsyncDelegate;
 			return g.EndInvoke(AsyncResult);
 		}
@@ -756,7 +755,7 @@ namespace Heijden.DNS
 		/// <returns></returns>
 		public IPHostEntry EndGetHostByName(IAsyncResult AsyncResult)
 		{
-			AsyncResult aResult = (AsyncResult)AsyncResult;
+            System.Runtime.Remoting.Messaging.AsyncResult aResult = (System.Runtime.Remoting.Messaging.AsyncResult)AsyncResult;
 			GetHostByNameDelegate g = (GetHostByNameDelegate)aResult.AsyncDelegate;
 			return g.EndInvoke(AsyncResult);
 		}
@@ -804,7 +803,7 @@ namespace Heijden.DNS
 		/// <returns>An System.Net.IPHostEntry object that contains DNS information about a host.</returns>
 		public IPHostEntry EndResolve(IAsyncResult AsyncResult)
 		{
-			AsyncResult aResult = (AsyncResult)AsyncResult;
+            System.Runtime.Remoting.Messaging.AsyncResult aResult = (System.Runtime.Remoting.Messaging.AsyncResult)AsyncResult;
 			ResolveDelegate g = (ResolveDelegate)aResult.AsyncDelegate;
 			return g.EndInvoke(AsyncResult);
 		}
@@ -898,7 +897,7 @@ namespace Heijden.DNS
 		///</returns>
 		public IPHostEntry EndGetHostEntry(IAsyncResult AsyncResult)
 		{
-			AsyncResult aResult = (AsyncResult)AsyncResult;
+            System.Runtime.Remoting.Messaging.AsyncResult aResult = (System.Runtime.Remoting.Messaging.AsyncResult)AsyncResult;
 			if (aResult.AsyncDelegate is GetHostEntryDelegate)
 			{
 				GetHostEntryDelegate g = (GetHostEntryDelegate)aResult.AsyncDelegate;

@@ -5,6 +5,8 @@ VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DnsDig", "DnsDig\DnsDig.csproj", "{B1EACF94-22A9-4C47-9BE5-33332E39E07B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDig", "WebDig\WebDig.csproj", "{2E2D2827-D7FB-4D56-BC98-E74770F1BDDD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{B1EACF94-22A9-4C47-9BE5-33332E39E07B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1EACF94-22A9-4C47-9BE5-33332E39E07B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1EACF94-22A9-4C47-9BE5-33332E39E07B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E2D2827-D7FB-4D56-BC98-E74770F1BDDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E2D2827-D7FB-4D56-BC98-E74770F1BDDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E2D2827-D7FB-4D56-BC98-E74770F1BDDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E2D2827-D7FB-4D56-BC98-E74770F1BDDD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
