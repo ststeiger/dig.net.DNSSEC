@@ -1,13 +1,12 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WebDig.Pages
 {
-    public class IndexModel : PageModel
+    public class IndexModel 
+        : Microsoft.AspNetCore.Mvc.RazorPages.PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly Microsoft.Extensions.Logging.ILogger<IndexModel> _logger;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(Microsoft.Extensions.Logging.ILogger<IndexModel> logger)
         {
             _logger = logger;
         }

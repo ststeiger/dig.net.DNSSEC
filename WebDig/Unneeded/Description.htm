@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNS Dig Web Tool</title>
+    <style>
+    </style>
+</head>
+<body>
+
+
+
+<div data-test-render-count="6">
+    <div style="height: auto; opacity: 1;">
+        <div data-is-streaming="false"
+             class="group  relative  -tracking-[0.015em] pb-8"
+             style="opacity: 1; transform: none;">
+            <div class="font-claude-message  relative  leading-[1.65rem]  [&amp;_pre>div]:bg-bg-300  [&amp;_.ignore-pre-bg>div]:bg-transparent  [&amp;>div>div>:is(p,blockquote,h1,h2,h3,h4,h5,h6)]:pl-2  [&amp;>div>div>:is(p,blockquote,ul,ol,h1,h2,h3,h4,h5,h6)]:pr-8">
+                <div tabindex="0">
+                    <div class="grid-cols-1 grid gap-2.5 [&amp;_>_*]:min-w-0">
+                    
+                  
+                        <h2 class="text-xl font-bold text-text-100 mt-1 -mb-0.5"
+                            level="2">Implementation Explanation</h2>
+                        <h3 class="text-lg font-bold text-text-100 mt-1 -mb-1.5"
+                            level="3">1. Frontend (HTML/CSS/JS)</h3>
+                        <p class="whitespace-pre-wrap break-words">The frontend is a responsive web application that mimics the layout and functionality of the original Windows Forms application:</p>
+                        <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                            depth="0">
+                            <li class="whitespace-normal break-words"
+                                index="0"><strong>HTML Structure</strong>:
+                                <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                                    depth="1">
+                                    <li class="whitespace-normal break-words"
+                                        index="0">Uses a card-based layout with separate sections for query settings and results</li>
+                                    <li class="whitespace-normal break-words"
+                                        index="1">Input fields for DNS server, query, and other settings</li>
+                                    <li class="whitespace-normal break-words"
+                                        index="2">Dropdown selects for QType and QClass</li>
+                                    <li class="whitespace-normal break-words"
+                                        index="3">Checkboxes and radio buttons for options</li>
+                                    <li class="whitespace-normal break-words"
+                                        index="4">Navigation controls for query history</li>
+                                </ul>
+                            </li>
+                            <li class="whitespace-normal break-words"
+                                index="1"><strong>CSS Styling</strong>:
+                                <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                                    depth="1">
+                                    <li class="whitespace-normal break-words"
+                                        index="0">Completely custom CSS with no external libraries</li>
+                                    <li class="whitespace-normal break-words"
+                                        index="1">Responsive design using media queries</li>
+                                    <li class="whitespace-normal break-words"
+                                        index="2">Flexbox layout for form elements</li>
+                                    <li class="whitespace-normal break-words"
+                                        index="3">Similar look and feel to the original application</li>
+                                </ul>
+                            </li>
+                            <li class="whitespace-normal break-words"
+                                index="2"><strong>JavaScript Logic</strong>:
+                                <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                                    depth="1">
+                                    <li class="whitespace-normal break-words"
+                                        index="0">Communicates with the backend API</li>
+                                    <li class="whitespace-normal break-words"
+                                        index="1">Handles form submission and validation</li>
+                                    <li class="whitespace-normal break-words"
+                                        index="2">Manages query history (like the original application)</li>
+                                    <li class="whitespace-normal break-words"
+                                        index="3">Displays results in a monospaced font similar to the original UI</li>
+                                    <li class="whitespace-normal break-words"
+                                        index="4">Handles UI interactions like toggling modals and word wrap</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <h3 class="text-lg font-bold text-text-100 mt-1 -mb-1.5"
+                            level="3">2. Backend (ASP.NET Minimal API)</h3>
+                        <p class="whitespace-pre-wrap break-words">The backend is implemented as an ASP.NET Core Minimal API:</p>
+                        <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                            depth="0">
+                            <li class="whitespace-normal break-words"
+                                index="0"><strong>API Endpoints</strong>:
+                                <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                                    depth="1">
+                                    <li class="whitespace-normal break-words"
+                                        index="0"><code class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.4rem] px-1 py-px text-[0.9rem]">/api/qtypes</code> - Gets available QType options</li>
+                                    <li class="whitespace-normal break-words"
+                                        index="1"><code class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.4rem] px-1 py-px text-[0.9rem]">/api/qclasses</code> - Gets available QClass options</li>
+                                    <li class="whitespace-normal break-words"
+                                        index="2"><code class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.4rem] px-1 py-px text-[0.9rem]">/api/default-dns</code> - Gets the default DNS server</li>
+                                    <li class="whitespace-normal break-words"
+                                        index="3"><code class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.4rem] px-1 py-px text-[0.9rem]">/api/dig</code> - Performs the DNS query</li>
+                                </ul>
+                            </li>
+                            <li class="whitespace-normal break-words"
+                                index="1"><strong>Special Handling</strong>:
+                                <ul class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-disc space-y-1.5 pl-7"
+                                    depth="1">
+                                    <li class="whitespace-normal break-words"
+                                        index="0">Captures console output similar to the original application</li>
+                                    <li class="whitespace-normal break-words"
+                                        index="1">Maintains the same query functionality</li>
+                                    <li class="whitespace-normal break-words"
+                                        index="2">Handles ARPA conversion for PTR and NAPTR records</li>
+                                    <li class="whitespace-normal break-words"
+                                        index="3">Forces TCP for AXFR zone transfers</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <h3 class="text-lg font-bold text-text-100 mt-1 -mb-1.5"
+                            level="3">How to Deploy</h3>
+                        <ol class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-decimal space-y-1.5 pl-7"
+                            depth="0">
+                            <li class="whitespace-normal break-words"
+                                index="0">Create an ASP.NET Core Web Application project</li>
+                            <li class="whitespace-normal break-words"
+                                index="1">Add the HTML file to the <code class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.4rem] px-1 py-px text-[0.9rem]">wwwroot</code> folder</li>
+                            <li class="whitespace-normal break-words"
+                                index="2">Add the API code to your <code class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.4rem] px-1 py-px text-[0.9rem]">Program.cs</code> file</li>
+                            <li class="whitespace-normal break-words"
+                                index="3">Make sure your port of the Heijden.DNS library is properly referenced</li>
+                            <li class="whitespace-normal break-words"
+                                index="4">Run with <code class="bg-text-200/5 border border-0.5 border-border-300 text-danger-000 whitespace-pre-wrap rounded-[0.4rem] px-1 py-px text-[0.9rem]">dotnet run</code> or publish for deployment</li>
+                        </ol>
+                        <p class="whitespace-pre-wrap break-words">This implementation preserves all the functionality from the original Windows Forms application while providing a modern, responsive web interface that works well on both desktop and mobile devices.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -3,15 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <ImplicitUsings>disable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Dns\Root\named_root.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Dns\Root\named_root.txt" />
-  </ItemGroup>
 
 </Project>

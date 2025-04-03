@@ -1,0 +1,66 @@
+
+Let's also create the FeedbackWriter class that's used in the original code to capture console output and redirect it to the UI:
+
+
+
+
+Implementation Explanation
+1. Frontend (HTML/CSS/JS)
+The frontend is a responsive web application that mimics the layout and functionality of the original Windows Forms application:
+
+HTML Structure:
+
+Uses a card-based layout with separate sections for query settings and results
+Input fields for DNS server, query, and other settings
+Dropdown selects for QType and QClass
+Checkboxes and radio buttons for options
+Navigation controls for query history
+
+
+CSS Styling:
+
+Completely custom CSS with no external libraries
+Responsive design using media queries
+Flexbox layout for form elements
+Similar look and feel to the original application
+
+
+JavaScript Logic:
+
+Communicates with the backend API
+Handles form submission and validation
+Manages query history (like the original application)
+Displays results in a monospaced font similar to the original UI
+Handles UI interactions like toggling modals and word wrap
+
+
+
+2. Backend (ASP.NET Minimal API)
+The backend is implemented as an ASP.NET Core Minimal API:
+
+API Endpoints:
+
+/api/qtypes - Gets available QType options
+/api/qclasses - Gets available QClass options
+/api/default-dns - Gets the default DNS server
+/api/dig - Performs the DNS query
+
+
+Special Handling:
+
+Captures console output similar to the original application
+Maintains the same query functionality
+Handles ARPA conversion for PTR and NAPTR records
+Forces TCP for AXFR zone transfers
+
+
+
+How to Deploy
+
+Create an ASP.NET Core Web Application project
+Add the HTML file to the wwwroot folder
+Add the API code to your Program.cs file
+Make sure your port of the Heijden.DNS library is properly referenced
+Run with dotnet run or publish for deployment
+
+This implementation preserves all the functionality from the original Windows Forms application while providing a modern, responsive web interface that works well on both desktop and mobile devices.

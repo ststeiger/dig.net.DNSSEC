@@ -1,0 +1,588 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNS Dig Web Tool</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            line-height: 1.6;
+            padding: 15px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        /* Form styling */
+        .card {
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .card-header {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            font-weight: bold;
+            background-color: #f8f9fa;
+        }
+        
+        .card-body {
+            padding: 15px;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+            margin-right: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .form-group:last-child {
+            margin-right: 0;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .input-group {
+            display: flex;
+        }
+        
+        .input-group input {
+            flex: 1;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        
+        .input-group button {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+        
+        button {
+            padding: 8px 15px;
+            background-color: #0275d8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        button:hover {
+            background-color: #0269c2;
+        }
+        
+        button.secondary {
+            background-color: #6c757d;
+        }
+        
+        button.secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        /* Checkbox and radio styling */
+        .checkbox-group, .radio-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .checkbox-group input, .radio-group input {
+            width: auto;
+            margin-right: 8px;
+        }
+        
+        /* Results area */
+        .result-box {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            min-height: 300px;
+            max-height: 60vh;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        /* Navigation */
+        .query-nav {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .query-counter {
+            margin: 0 15px;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .close-modal {
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #333;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+            }
+            
+            .form-group {
+                width: 100%;
+                margin-right: 0;
+            }
+            
+            .result-box {
+                min-height: 200px;
+            }
+            
+            .options-row {
+                flex-direction: column;
+            }
+            
+            .options-column {
+                width: 100%;
+            }
+        }
+        
+        /* Options layout */
+        .options-row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .options-column {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 15px;
+        }
+        
+        .settings-group {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="title">DNS Dig Web Tool</div>
+            <button id="aboutBtn">About</button>
+        </header>
+
+        <div class="card">
+            <div class="card-header">Query Settings</div>
+            <div class="card-body">
+                <form id="digForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="dnsServer">DNS Server</label>
+                            <div class="input-group">
+                                <input type="text" id="dnsServer" placeholder="8.8.8.8">
+                                <button type="button" id="resetDnsBtn">Reset</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="qclass">QClass</label>
+                            <select id="qclass">
+                                <!-- Will be populated from API -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="qtype">QType</label>
+                            <select id="qtype">
+                                <!-- Will be populated from API -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="query">Query</label>
+                            <input type="text" id="query" placeholder="example.com">
+                        </div>
+                        <div class="form-group" style="max-width: 150px;">
+                            <label>&nbsp;</label>
+                            <button type="submit" id="sendBtn">Send</button>
+                        </div>
+                    </div>
+
+                    <div class="options-row">
+                        <div class="options-column">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="recursion" checked>
+                                <label for="recursion">Recursion</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="useCache" checked>
+                                <label for="useCache">Use Resolver Cache</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="arpaConvert" checked>
+                                <label for="arpaConvert">Convert to Arpa for PTR/NAPTR</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="wordWrap">
+                                <label for="wordWrap">Wordwrap on Output</label>
+                            </div>
+                        </div>
+                        <div class="options-column">
+                            <div class="settings-group">
+                                <div class="radio-group">
+                                    <input type="radio" id="udp" name="transport" checked>
+                                    <label for="udp">UDP</label>
+                                </div>
+                                <div class="radio-group">
+                                    <input type="radio" id="tcp" name="transport">
+                                    <label for="tcp">TCP</label>
+                                </div>
+                            </div>
+                            <div class="settings-group">
+                                <div class="form-group">
+                                    <label for="attempts">Attempts</label>
+                                    <input type="number" id="attempts" min="1" max="10" value="3">
+                                </div>
+                                <div class="form-group">
+                                    <label for="timeout">Timeout (sec)</label>
+                                    <input type="number" id="timeout" min="1" max="30" value="5">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="query-nav">
+                        <button type="button" id="prevBtn" disabled><<</button>
+                        <span class="query-counter" id="queryCounter">0 (0)</span>
+                        <button type="button" id="nextBtn" disabled>>></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Results</div>
+            <div class="card-body">
+                <div class="result-box" id="resultOutput"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div class="modal" id="aboutModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>About DNS Dig Web Tool</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>DNS Dig Web Tool is a web-based DNS lookup utility that lets you perform DNS lookups and view the responses.</p>
+                <p>This is a port of the original Dig.Net Windows Forms application to a modern web application using ASP.NET Core.</p>
+                <p>Version: 1.0</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Query history management
+            const queryHistory = [];
+            let currentQueryIndex = -1;
+            
+            // Form elements
+            const form = document.getElementById('digForm');
+            const dnsServerInput = document.getElementById('dnsServer');
+            const qtypeSelect = document.getElementById('qtype');
+            const qclassSelect = document.getElementById('qclass');
+            const queryInput = document.getElementById('query');
+            const resultOutput = document.getElementById('resultOutput');
+            const recursionCheckbox = document.getElementById('recursion');
+            const useCacheCheckbox = document.getElementById('useCache');
+            const arpaConvertCheckbox = document.getElementById('arpaConvert');
+            const wordWrapCheckbox = document.getElementById('wordWrap');
+            const udpRadio = document.getElementById('udp');
+            const tcpRadio = document.getElementById('tcp');
+            const attemptsInput = document.getElementById('attempts');
+            const timeoutInput = document.getElementById('timeout');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const queryCounter = document.getElementById('queryCounter');
+            const resetDnsBtn = document.getElementById('resetDnsBtn');
+            const aboutBtn = document.getElementById('aboutBtn');
+            const aboutModal = document.getElementById('aboutModal');
+            const closeModalBtn = document.querySelector('.close-modal');
+            
+            // Initialize the form
+            function initializeForm() {
+                // Fetch QType options
+                fetch('/api/qtypes')
+                    .then(response => response.json())
+                    .then(data => {
+                        populateSelect(qtypeSelect, data);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching QTypes:', error);
+                    });
+                
+                // Fetch QClass options
+                fetch('/api/qclasses')
+                    .then(response => response.json())
+                    .then(data => {
+                        populateSelect(qclassSelect, data);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching QClasses:', error);
+                    });
+                
+                // Get default DNS server
+                fetch('/api/default-dns')
+                    .then(response => response.json())
+                    .then(data => {
+                        dnsServerInput.value = data.server;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching default DNS server:', error);
+                        dnsServerInput.value = '8.8.8.8'; // Fallback
+                    });
+            }
+            
+            function populateSelect(selectElement, options) {
+                selectElement.innerHTML = '';
+                options.forEach(option => {
+                    const optElement = document.createElement('option');
+                    optElement.value = option.value;
+                    optElement.textContent = option.text;
+                    selectElement.appendChild(optElement);
+                });
+            }
+            
+            // Send DNS query
+            function sendQuery() {
+                const queryData = {
+                    dnsServer: dnsServerInput.value,
+                    query: queryInput.value,
+                    qtype: qtypeSelect.value,
+                    qclass: qclassSelect.value,
+                    recursion: recursionCheckbox.checked,
+                    useCache: useCacheCheckbox.checked,
+                    arpaConvert: arpaConvertCheckbox.checked,
+                    transport: udpRadio.checked ? 'UDP' : 'TCP',
+                    attempts: parseInt(attemptsInput.value),
+                    timeout: parseInt(timeoutInput.value)
+                };
+                
+                resultOutput.textContent = 'Querying...';
+                
+                fetch('/api/dig', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(queryData)
+                })
+                .then(response => response.text())
+                .then(data => {
+                    resultOutput.textContent = data;
+                    
+                    // Add to history if this is a new query
+                    if (currentQueryIndex === queryHistory.length - 1 || currentQueryIndex === -1) {
+                        addToHistory({
+                            name: queryInput.value,
+                            type: qtypeSelect.value,
+                            class: qclassSelect.value
+                        });
+                    }
+                })
+                .catch(error => {
+                    resultOutput.textContent = 'Error: ' + error.message;
+                    console.error('Error performing DNS query:', error);
+                });
+            }
+            
+            // Add query to history
+            function addToHistory(query) {
+                queryHistory.push(query);
+                currentQueryIndex = queryHistory.length - 1;
+                updateHistoryControls();
+            }
+            
+            // Update history navigation controls
+            function updateHistoryControls() {
+                prevBtn.disabled = currentQueryIndex <= 0;
+                nextBtn.disabled = currentQueryIndex >= queryHistory.length - 1;
+                queryCounter.textContent = queryHistory.length > 0 
+                    ? `${currentQueryIndex + 1} (${queryHistory.length})` 
+                    : '0 (0)';
+            }
+            
+            // Load query from history
+            function loadFromHistory(index) {
+                if (index >= 0 && index < queryHistory.length) {
+                    const query = queryHistory[index];
+                    queryInput.value = query.name;
+                    
+                    // Find and select the correct option
+                    for (let i = 0; i < qtypeSelect.options.length; i++) {
+                        if (qtypeSelect.options[i].value === query.type) {
+                            qtypeSelect.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    
+                    for (let i = 0; i < qclassSelect.options.length; i++) {
+                        if (qclassSelect.options[i].value === query.class) {
+                            qclassSelect.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    
+                    currentQueryIndex = index;
+                    updateHistoryControls();
+                    sendQuery();
+                }
+            }
+            
+            // Event listeners
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                sendQuery();
+            });
+            
+            resetDnsBtn.addEventListener('click', function() {
+                fetch('/api/default-dns')
+                    .then(response => response.json())
+                    .then(data => {
+                        dnsServerInput.value = data.server;
+                    });
+            });
+            
+            prevBtn.addEventListener('click', function() {
+                if (currentQueryIndex > 0) {
+                    loadFromHistory(currentQueryIndex - 1);
+                }
+            });
+            
+            nextBtn.addEventListener('click', function() {
+                if (currentQueryIndex < queryHistory.length - 1) {
+                    loadFromHistory(currentQueryIndex + 1);
+                }
+            });
+            
+            // AXFR zone transfer needs TCP
+            qtypeSelect.addEventListener('change', function() {
+                if (this.value === 'AXFR') {
+                    tcpRadio.checked = true;
+                }
+            });
+            
+            // Modal functionality
+            aboutBtn.addEventListener('click', function() {
+                aboutModal.style.display = 'flex';
+            });
+            
+            closeModalBtn.addEventListener('click', function() {
+                aboutModal.style.display = 'none';
+            });
+            
+            window.addEventListener('click', function(e) {
+                if (e.target === aboutModal) {
+                    aboutModal.style.display = 'none';
+                }
+            });
+            
+            // Wordwrap toggle
+            wordWrapCheckbox.addEventListener('change', function() {
+                resultOutput.style.whiteSpace = this.checked ? 'pre-wrap' : 'pre';
+            });
+            
+            // Initialize
+            initializeForm();
+        });
+    </script>
+</body>
+</html>
