@@ -400,7 +400,7 @@
             // Initialize the form
             function initializeForm() {
                 // Fetch QType options
-                fetch('/api/qtypes')
+                fetch('api/qtypes')
                     .then(response => response.json())
                     .then(data => {
                         populateSelect(qtypeSelect, data);
@@ -410,7 +410,7 @@
                     });
                 
                 // Fetch QClass options
-                fetch('/api/qclasses')
+                fetch('api/qclasses')
                     .then(response => response.json())
                     .then(data => {
                         populateSelect(qclassSelect, data);
@@ -420,7 +420,7 @@
                     });
                 
                 // Get default DNS server
-                fetch('/api/default-dns')
+                fetch('api/default-dns')
                     .then(response => response.json())
                     .then(data => {
                         dnsServerInput.value = data.server;
@@ -458,7 +458,7 @@
                 
                 resultOutput.textContent = 'Querying...';
                 
-                fetch('/api/dig', {
+                fetch('api/dig', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -534,7 +534,7 @@
             });
             
             resetDnsBtn.addEventListener('click', function() {
-                fetch('/api/default-dns')
+                fetch('api/default-dns')
                     .then(response => response.json())
                     .then(data => {
                         dnsServerInput.value = data.server;
